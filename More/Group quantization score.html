@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Gallery</title>
+    <style>
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+        }
+
+        .main-image {
+            max-width: 300px;
+            max-height: 300px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .main-image:hover {
+            transform: scale(1.2);
+        }
+
+        .preview-image {
+            max-width: 100px;
+            max-height: 100px;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .preview-image:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img class="main-image" src="Group-quantization-score/photo/Zhou Saiqun.jpg" onclick="togglePreview('Zhou Saiqun-Zu')" id="Zhou Saiqun-Zu">
+    </div>
+    <div class="image-container">
+        <img class="main-image" src="Group-quantization-score/photo/Liu Yaling.jpg" onclick="togglePreview('Liu Yaling-Zu')" id="Liu Yaling-Zu">
+    </div>
+    <div class="image-container">
+        <img class="main-image" src="Group-quantization-score/photo/Zhong Mingbo.jpg" onclick="togglePreview('Zhong Mingbo-Zu')" id="Zhong Mingbo-Zu">
+    </div>
+    <div class="image-container">
+        <img class="main-image" src="Group-quantization-score/photo/Hong Shaojun.jpg" onclick="togglePreview('Hong Shaojun-Zu')" id="Hong Shaojun-Zu">
+    </div>
+    <div class="image-container">
+        <img class="main-image" src="Group-quantization-score/photo/Gao Jinling.jpg" onclick="togglePreview('Gao Jinling-Zu')" id="Gao Jinling-Zu">
+    </div>
+    <div class="image-container">
+        <img class="main-image" src="Group-quantization-score/photo/Hong Yixiang.jpg" onclick="togglePreview('Hong Yixiang-Zu')" id="Hong Yixiang-Zu">
+    </div>
+
+    <script>
+        let isZhouPreviewDisplayed = false;
+        let isLiuPreviewDisplayed = false;
+        let isZhongPreviewDisplayed = false;
+        let isHongPreviewDisplayed = false;
+        let isGaoPreviewDisplayed = false;
+        let isHongYiPreviewDisplayed = false;
+        
+        function togglePreview(imageId) {
+            const mainImage = document.getElementById(imageId);
+            if (imageId === 'Zhou Saiqun-Zu' && !isZhouPreviewDisplayed) {
+                mainImage.src = 'Group-quantization-score/photo/Zhou Saiqun Zu-Fenshu.jpg';
+                isZhouPreviewDisplayed = true;
+            } else if (imageId === 'Liu Yaling-Zu' && !isLiuPreviewDisplayed) {
+                mainImage.src = 'Group-quantization-score/photo/Liu Yaling Zu-Fenshu.jpg';
+                isLiuPreviewDisplayed = true;
+            } else if (imageId === 'Zhong Mingbo-Zu' && !isZhongPreviewDisplayed) {
+                mainImage.src = 'Group-quantization-score/photo/Zhong Mingbo Zu-Fenshu.jpg';
+                isZhongPreviewDisplayed = true;
+            } else if (imageId === 'Hong Shaojun-Zu' && !isHongPreviewDisplayed) {
+                mainImage.src = 'Group-quantization-score/photo/Hong Shaojun Zu-Fenshu.jpg';
+                isHongPreviewDisplayed = true;
+            } else if (imageId === 'Gao Jinling-Zu' && !isGaoPreviewDisplayed) {
+                mainImage.src = 'Group-quantization-score/photo/Gao Jinling Zu-Fenshu.jpg';
+                isGaoPreviewDisplayed = true;
+            } else if (imageId === 'Hong Yixiang-Zu' && !isHongYiPreviewDisplayed) {
+                mainImage.src = 'Group-quantization-score/photo/Hong Yixiang Zu-Fenshu.jpg';
+                isHongYiPreviewDisplayed = true;
+            } else {
+                openWebPage(imageId);
+            }
+        }
+
+        function openWebPage(imageId) {
+            if (imageId === 'Zhou Saiqun-Zu') {
+                window.location.href = 'Group-quantization-score/Zhou Saiqun Zu.html';
+            } else if (imageId === 'Liu Yaling-Zu') {
+                window.location.href = 'Group-quantization-score/Liu Yaling Zu.html';
+            } else if (imageId === 'Zhong Mingbo-Zu') {
+                window.location.href = 'Group-quantization-score/Zhong Mingbo Zu.html';
+            } else if (imageId === 'Hong Shaojun-Zu') {
+                window.location.href = 'Group-quantization-score/Hong Shaojun Zu.html';
+            } else if (imageId === 'Gao Jinling-Zu') {
+                window.location.href = 'Group-quantization-score/Gao Jinling Zu.html';
+            } else if (imageId === 'Hong Yixiang-Zu') {
+                window.location.href = 'Group-quantization-score/Hong Yixiang Zu.html';
+            }
+        }
+    </script>
+</body>
+</html>
