@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>攸县健坤高级中学</title>
+    <style>
+        a[href="https://www.douyin.com/search/%E6%94%B8%E5%8E%BF%E5%81%A5%E5%9D%A4?aid=7a6867ae-07a2-49f3-9f91-33000baa3b9b&publish_time=0&sort_type=0&type=general"] {
+            font-size: 24px;
+            text-decoration: none; /* 去除超链接的下划线 */
+            color: black; /* 设置超链接颜色为黑色 */
+        }
+        #logoImg {
+            width: auto; /* 设置网址图标宽度为原始尺寸 */
+            height: auto; /* 设置网址图标高度为原始尺寸 */
+        }
+    </style>
+</head>
+<body>
+    <h1 id="logo">校徽</h1>
+    <img id="logoImg" src="png/youxjk.png" alt="校徽">  <!-- 设置校徽图片 !-->
+
+    <h1 onclick="toggleElement('introduction')">介绍</h1>
+    <div id="introduction" style="display: none;">
+        <iframe src="https://baike.baidu.com/item/%E6%A0%AA%E6%B4%B2%E5%81%A5%E5%9D%A4%E5%A4%96%E5%9B%BD%E8%AF%AD%E5%AD%A6%E6%A0%A1/11014243?fr=ge_ala" width="800" height="600"></iframe>
+    </div>
+
+    <h1 onclick="toggleElement('official')">官网</h1>
+    <div id="official" style="display: none;">
+        <embed src="http://www.hnkqedu.com/index.php" width="800" height="600"></embed>
+    </div>
+
+    <h1 onclick="toggleElement('articles')">相关文章</h1>
+    <div id="articles" style="display: none;">
+        <iframe src="https://weixin.sogou.com/weixinwap?query=%E6%94%B8%E5%8E%BF%E5%81%A5%E5%9D%A4%E5%A4%96%E5%9B%BD%E8%AF%AD%E5%AD%A6%E6%A0%A1&ie=utf8&s_from=input&type=2&t=1711275236160&pg=webSearchList&_sug_=y&_sug_type_=-1" width="800" height="600"></iframe>
+    </div>
+
+    <h1><a href="https://www.douyin.com/search/%E6%94%B8%E5%8E%BF%E5%81%A5%E5%9D%A4?aid=7a6867ae-07a2-49f3-9f91-33000baa3b9b&publish_time=0&sort_type=0&type=general" target="_blank">抖音搜索结果</a></h1>
+    
+    <script>
+        function toggleElement(elementId) {
+            var element = document.getElementById(elementId);
+            if (element.style.display === "none") {
+                element.style.display = "block";
+            } else {
+                element.style.display = "none";
+            }
+        }
+
+    document.getElementById("logoImg").style.display = "none";
+
+    document.getElementById('logo').addEventListener('click', function() {
+        var logoImg = document.getElementById("logoImg");
+        if (logoImg.style.display === "none") {
+            logoImg.style.display = "block";
+        } else {
+            logoImg.style.display = "none";
+        }
+    });
+    </script>
+</body>
+</html>
