@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闪念笔记1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #chat-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        #chat-messages {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        .message {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+        #user-input {
+            display: flex;
+            align-items: center;
+        }
+        #message-input {
+            flex: 1;
+            margin-right: 10px;
+        }
+        #file-input {
+            display: none;
+        }
+        #voice-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container" style="display:block;">
+    <div id="chat-messages">
+        <!-- 聊天消息显示区域 -->
+    </div>
+    <div id="user-input">
+        <input type="text" id="message-input" placeholder="输入你的消息......">
+        <button id="send-button">发送</button>
+        <button id="file-button">📎</button>
+        <button id="voice-button">🎤</button>
+        <input type="file" id="file-input" accept="image/*, video/*">
+        <input type="file" id="voice-input" accept="audio/*">
+    </div>
+</div>
+
+<script>
+    // 全局变量
+    var chatMessages = document.getElementById("chat-messages");
+
+    // 发送消息按钮点击事件
+    document.getElementById("send-button").addEventListener("click", function() {
+    var message = document.getElementById("message-input").value;
+    if (message) {
+        // 发送消息到服务器
+        sendMessage({
+            type: "message",
+            message: message
+        });
+        document.getElementById("message-input").value = "";
+    } else {
+        alert("消息不能为空！");
+    }
+    });
+
+    // 发送文件按钮点击事件
+    document.getElementById("file-button").addEventListener("click", function() {
+        document.getElementById("file-input").click();
+    });
+
+    // 监听文件选择事件
+    document.getElementById("file-input").addEventListener("change", function(event) {
+        var file = event.target.files[0];
+        if (file) {
+            // 发送文件到服务器
+            sendFile(file);
+        }
+    });
+
+    // 发送语音按钮点击事件
+    document.getElementById("voice-button").addEventListener("click", function() {
+        document.getElementById("voice-input").click();
+    });
+
+    // 监听语音文件选择事件
+    document.getElementById("voice-input").addEventListener("change", function(event) {
+        var file = event.target.files[0];
+        if (file) {
+            // 发送语音文件到服务器
+            sendVoice(file);
+        }
+    });
+
+    // 发送消息函数
+    function sendMessage(message) {
+        // 发送消息到服务器并更新界面显示
+        var messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        messageElement.innerHTML = parseMessage(message);
+        chatMessages.appendChild(messageElement);
+
+        // 保存消息到本地存储
+        saveMessage(message);
+    }
+
+    // 发送文件函数
+    function sendFile(file) {
+        // 发送文件到服务器并更新界面显示
+        var messageElement = document.createElement("div");
+        messageElement.classList.add("message");
+        if (file.type.startsWith("image")) {
+            messageElement.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="${file.name}">`;
+        } else if (file.type.startsWith("video")) {
+            messageElement.innerHTML = `<video src="${URL.createObjectURL(file)}" controls></video>`;
+        } else {
+            messageElement.innerHTML = `File: ${file.name}`;
+        }
+        chatMessages.appendChild(messageElement);
+
+        // 保存消息到本地存储
+        saveMessage({
+            type: "file",
+            file: file
+        });
+    }
+
+    // 发送语音函数
+    function sendVoice(voiceFile) {
+    // 发送语音文件到服务器并更新界面显示
+    var messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+    messageElement.innerHTML = "Voice message: " + voiceFile.name + '<audio controls><source src="' + URL.createObjectURL(voiceFile) + '" type="audio/mpeg"></audio>';
+    chatMessages.appendChild(messageElement);
+
+    // 保存消息到本地存储
+    saveMessage({
+        type: "voice",
+        file: voiceFile
+    });
+   }
+        // 解析消息函数，支持 Markdown 语法
+        function parseMessage(message) {
+            // 假设只支持粗体和斜体
+            message = message.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            message = message.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            return message;
+        }
+    </script>
+</body>
+</html>

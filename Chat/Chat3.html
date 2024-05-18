@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>闪念笔记2</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chat-container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .chat-sidebar {
+      width: 250px;
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+
+    .chat-main {
+      flex: 1;
+      padding: 20px;
+      position: relative;
+    }
+
+    .chat-input {
+      display: flex;
+      margin-top: 20px;
+    }
+
+    .chat-input-field {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .chat-button {
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-left: 10px;
+      cursor: pointer;
+      background-color: #f5f5f5;
+    }
+
+    .chat-button:hover {
+      background-color: #e0e0e0;
+    }
+
+    .chat-message {
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .chat-preview {
+      position: absolute;
+      top: -350px;
+      left: 0;
+      right: 0;
+      display: none;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+
+    .preview-image {
+      max-width: 100%;
+      max-height: 300px;
+    }
+
+    .preview-video {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-sidebar">
+      <!-- Sidebar content here -->
+    </div>
+    <div class="chat-main">
+      <div class="chat-preview" id="file-preview"></div>
+      <div class="chat-messages">
+        <!-- Chat messages will be displayed here -->
+      </div>
+      <div class="chat-input">
+        <input type="text" class="chat-input-field" placeholder="请输入消息......">
+        <button class="chat-button" id="send-message">发送</button>
+        <input type="file" id="file-input">
+        <button class="chat-button" id="send-file">发送<br>(文件)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sendMessageButton = document.getElementById('send-message');
+    const sendFileButton = document.getElementById('send-file');
+    const messageInput = document.querySelector('.chat-input-field');
+    const fileInput = document.getElementById('file-input');
+    const messagesContainer = document.querySelector('.chat-messages');
+    const filePreview = document.getElementById('file-preview');
+
+    sendMessageButton.addEventListener('click', () => {
+      const message = messageInput.value;
+      if (message.trim() !== '') {
+        displayMessage(message);
+        messageInput.value = '';
+      }
+    });
+
+    sendFileButton.addEventListener('click', () => {
+      const file = fileInput.files[0];
+      console.log('Selected file:', file);
+      if (file) {
+        if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
+          displayMedia(file);
+          displayFile(file);
+        } else {
+          displayFile(file);
+        }
+        fileInput.value = null;
+      }
+    });
+
+    function displayMessage(message) {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('chat-message');
+      messageElement.textContent = message;
+      messagesContainer.appendChild(messageElement);
+    }
+
+    function displayMedia(file) {
+      const mediaElement = file.type.startsWith('image/') ?
+        createImageElement(file) :
+        createVideoElement(file);
+      filePreview.innerHTML = '';
+      filePreview.style.display = 'block';
+      filePreview.appendChild(mediaElement);
+    }
+
+    function createImageElement(file) {
+      const imageElement = document.createElement('img');
+      imageElement.classList.add('preview-image');
+      imageElement.src = URL.createObjectURL(file);
+      
+      imageElement.addEventListener('click', () => {
+        window.open(imageElement.src, '_blank');
+      });
+
+      return imageElement;
+    }
+
+    function createVideoElement(file) {
+      const videoElement = document.createElement('video');
+      videoElement.classList.add('preview-video');
+      videoElement.setAttribute('controls', 'true');
+      videoElement.src = URL.createObjectURL(file);
+      
+      return videoElement;
+    }
+
+    function displayFile(file) {
+      const fileElement = document.createElement('div');
+      fileElement.classList.add('chat-message');
+      fileElement.textContent = `文件名: ${file.name}`;
+      messagesContainer.appendChild(fileElement);
+    }
+
+    document.addEventListener('click', (event) => {
+      if (!filePreview.contains(event.target)) {
+        filePreview.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
